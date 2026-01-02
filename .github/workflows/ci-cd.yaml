@@ -8,7 +8,7 @@ on:
   workflow_dispatch: {}
 
 env:
-  DOCKER_IMAGE_NAME: your-dockerhub-username/k8s-demo # Replace with your Docker Hub username/repo
+  DOCKER_IMAGE_NAME: kbaladattu/k8s-ci-cd-demo # Updated with user's Docker Hub username
 
 jobs:
 
