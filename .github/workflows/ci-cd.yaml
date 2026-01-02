@@ -67,9 +67,10 @@ jobs:
 
     - name: Apply Kubernetes Manifests
       run: |
+        kubectl apply -f k8s/namespace.yaml
         kubectl apply -f k8s/deployment.yaml
         kubectl apply -f k8s/service.yaml
 
     - name: Update Deployment Image
       run: |
-        kubectl set image deployment/k8s-demo-app k8s-demo=${{ env.DOCKER_IMAGE_NAME }}:${{ github.sha }}
+        kubectl set image deployment/k8s-demo-app k8s-demo=${{ env.DOCKER_IMAGE_NAME }}:${{ github.sha }} -n demo-app
