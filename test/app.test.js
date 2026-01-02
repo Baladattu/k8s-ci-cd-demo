@@ -1,43 +1,39 @@
 const request = require('supertest');
 const app = require('../app');
 
-// Mock Redis
-jest.mock('redis', () => ({
-  createClient: jest.fn(() => ({
-    on: jest.fn(),
-    connect: jest.fn().mockResolvedValue(),
-    set: jest.fn().mockResolvedValue('OK'),
-    get: jest.fn().mockResolvedValue('test-value'),
-  })),
+// Mock Redis Service
+jest.mock('../src/services/redisService', () => ({
+  getTodos: jest.fn().mockResolvedValue([{ id: '1', text: 'Test Todo' }]),
+  addTodo: jest.fn().mockResolvedValue({ id: '2', text: 'New Todo' }),
+  deleteTodo: jest.fn().mockResolvedValue([]),
 }));
 
-describe('GET /', () => {
-  it('responds with Hello message', async () => {
+describe('Todo API', () => {
+  it('GET /api/todos returns list', async () => {
+    const response = await request(app).get('/api/todos');
+    expect(response.statusCode).toBe(200);
+    expect(response.body).toHaveLength(1);
+    expect(response.body[0].text).toBe('Test Todo');
+  });
+
+  it('POST /api/todos creates todo', async () => {
+    const response = await request(app)
+      .post('/api/todos')
+      .send({ text: 'New Todo' });
+    expect(response.statusCode).toBe(201);
+    expect(response.body.text).toBe('New Todo');
+  });
+
+  it('DELETE /api/todos/:id deletes todo', async () => {
+    const response = await request(app).delete('/api/todos/1');
+    expect(response.statusCode).toBe(204);
+  });
+});
+
+describe('Frontend Serving', () => {
+  it('GET / serves index.html', async () => {
     const response = await request(app).get('/');
     expect(response.statusCode).toBe(200);
-    expect(response.text).toContain('Redis');
-  });
-});
-
-describe('GET /health', () => {
-  it('responds with 200 OK', async () => {
-    const response = await request(app).get('/health');
-    expect(response.statusCode).toBe(200);
-    expect(response.text).toBe('OK');
-  });
-});
-
-describe('Redis Operations', () => {
-  it('POST /data stores value', async () => {
-    const response = await request(app)
-      .post('/data')
-      .send({ key: 'name', value: 'Antigravity' });
-    expect(response.statusCode).toBe(201);
-  });
-
-  it('GET /data/:key retrieves value', async () => {
-    const response = await request(app).get('/data/name');
-    expect(response.statusCode).toBe(200);
-    expect(response.body.value).toBe('test-value');
+    expect(response.headers['content-type']).toContain('text/html');
   });
 });
