@@ -65,11 +65,11 @@ jobs:
         method: kubeconfig
         kubeconfig: ${{ secrets.KUBE_CONFIG }} # You need to put your KUBECONFIG content in this secret
 
-    - name: Update Deployment Image
-      run: |
-        kubectl set image deployment/k8s-demo-app k8s-demo=${{ env.DOCKER_IMAGE_NAME }}:${{ github.sha }}
-
     - name: Apply Kubernetes Manifests
       run: |
         kubectl apply -f k8s/deployment.yaml
         kubectl apply -f k8s/service.yaml
+
+    - name: Update Deployment Image
+      run: |
+        kubectl set image deployment/k8s-demo-app k8s-demo=${{ env.DOCKER_IMAGE_NAME }}:${{ github.sha }}

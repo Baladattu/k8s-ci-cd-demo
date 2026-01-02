@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: k8s-demo
-        image: your-dockerhub-username/k8s-demo:latest # Replace with your actual image
+        image: kbaladattu/k8s-ci-cd-demo:latest # Replace with your actual image
         ports:
         - containerPort: 3000
         resources:
