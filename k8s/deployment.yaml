@@ -20,6 +20,9 @@ spec:
         image: kbaladattu/k8s-ci-cd-demo:latest # Replace with your actual image
         ports:
         - containerPort: 3000
+        env:
+        - name: REDIS_URL
+          value: "redis://redis-service:6379"
         resources:
           requests:
             memory: "64Mi"
