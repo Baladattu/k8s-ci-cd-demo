@@ -1,20 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>K8s Todo App</title>
+    <title>Shorty - URL Shortener</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
-    <div class="container">
-        <h1>Kubernetes Todo App 🚀</h1>
-        <div class="input-group">
-            <input type="text" id="todo-input" placeholder="Add a new task...">
-            <button onclick="addTodo()">Add</button>
+    <div id="app" class="container">
+        <!-- Auth Screen -->
+        <div id="auth-screen" class="screen">
+            <h1 class="logo">Shorty 🚀</h1>
+            <div class="card">
+                <h2 id="auth-title">Welcome Back</h2>
+                <div class="input-group">
+                    <input type="text" id="username" placeholder="Username">
+                    <input type="password" id="password" placeholder="Password">
+                </div>
+                <div class="actions">
+                    <button id="login-btn" class="primary">Login</button>
+                    <button id="toggle-auth" class="secondary">Create account</button>
+                </div>
+            </div>
         </div>
-        <ul id="todo-list"></ul>
+
+        <!-- Dashboard Screen -->
+        <div id="dashboard-screen" class="screen hidden">
+            <header>
+                <h1 class="logo-small">Shorty</h1>
+                <div class="user-info">
+                    <span id="display-user"></span>
+                    <button id="logout-btn" class="text-btn">Logout</button>
+                </div>
+            </header>
+
+            <div class="card main-action">
+                <h2>Shorten a URL</h2>
+                <div class="input-group row">
+                    <input type="text" id="long-url" placeholder="Paste a long URL here...">
+                    <input type="text" id="custom-code" placeholder="Custom (opt)" class="small-input">
+                    <button id="shorten-btn" class="primary">Shorten</button>
+                </div>
+            </div>
+
+            <div class="card list-card">
+                <h3>My Links</h3>
+                <div id="links-list" class="links-list">
+                    <!-- Links populated here -->
+                </div>
+            </div>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>

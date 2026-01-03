@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: todo.172.83.83.241.nip.io
+  - host: shorty.172.83.83.241.sslip.io
     http:
       paths:
       - path: /
